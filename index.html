@@ -33,12 +33,22 @@
     <h2>Mini-Batch Gradient Descent w/ Randomized Mini-Batch</h2>
     
     <h2>Stochastic Gradient Descent</h2>
-    <h2>Mini-Batch SGD w/ Randomized Mini-Batch</h2>
+    <h2>Mini-Batch GD w/ Randomized Mini-Batch</h2>
     <h2>SGD with Momentum</h2>
     <h2>Nesterov Momentum SGD</h2>
     <h2>Averaged SGD</h2>
     <h2>AdaGrad</h2>
     <h2>RMSProp</h2>
+    <p>RMSprop is an unpublished, adaptive learning rate method proposed by Geoff Hinton in <a href="http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf">Lecture 6e of his Coursera Class</a>.</p>
+
+	<p>RMSprop and Adadelta have both been developed independently around the same time stemming from the need to resolve Adagrad's radically diminishing learning rates. RMSprop in fact is identical to the first update vector of Adadelta that we derived above:</p>
+	
+	<p>$$E[g^2]_t = \gamma * E[g^2]_{t-1} + (1 - \gamma) * g^2_t $$.</p>
+	
+	<p>$$\theta_{t+1} = \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t}$$</p>
+	
+	<p>RMSprop as well divides the learning rate by an exponentially decaying average of squared gradients. Hinton suggests $\gamma$ to be set to 0.9, the learning rate $\eta$ set to 0.001 and \epsilon set to 1e-8.</p>
+	
     <h2>Adam</h2>
     <p>'Adam' (for Adaptive Moment Estimation) is an update to ''RMSProp'' optimizer. In this running average of both the gradients and their magnitudes are used. The three equations that define this optimizer is as follows,
     
