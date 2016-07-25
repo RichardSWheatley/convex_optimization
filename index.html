@@ -27,13 +27,15 @@
     <br />
     <p>In this instance we will be considering only the supervised learning aspect. My job provides me with hundreds of datasets to work with. Almost all of these training sets should yield good results. The questions is always whether we need to modify our learning rates or decay rates for a specific training set. I will show here that the current methods, including the latest algorithms based strictly upon mathematical principles, do not fulfill our needs and therefore there remains a problem that needs to be addressed.</p>
 
-    <p>Gradient Descent is a first-order approximation algorithm. It is a minimization algorithm that best operates on a convex or pseudo-convex Cost Function. This cost function is typically predefined although <b>self.author</b> has found that creating a convex Cost Function can improve the results if the intended output is well-known</p>
+    <p>Gradient Descent is a first-order approximation algorithm. It is a minimization algorithm that best operates on a convex or pseudo-convex Cost Function. This cost function is typically predefined although <b>@wher0001</b> has found that creating a convex Cost Function can improve the results if the intended output is well-known.</p>
     <h2>Batch Gradient Descent</h2>
     In general we have some set of equations that we are trying to solve. The Standard way to solve for this is by using Iterative Least-Squares Cost function technique. This technique involves having a Cost function $J(\mathbf{\theta})$ that makes the problem convex. It is generally practiced that the $$J(\mathbf{\theta}) = \frac{1}{2}\sum_{i=1}^n (h_\theta( \mathbf{x^{(i)}} ) - y^{(i)})^2$$ where $$h_\theta(\mathbf{x^{(i)}}) = \theta^\intercal x$$
     <h2>Mini-Batch Gradient Descent w/ Randomized Mini-Batch</h2>
-    
+    During my testing I found that running gradient descent was causing some issues with having to sum the gradient term over the entire dataset. One way to circumvent this is to run the gradient descent on a smaller subset of the data. To remove bias I randomized the the number in the subset and also randomized the data itself.<br />
+        <br />I picked a minimum and maximum mini-batch size for the randomization and then ran through a couple of datasets. Through trial and error I was able to find that this method worked the best for my data even beating out Nesterov's method. This will not work for large datasets but in my case, lrage datasets are in the 50-100 range.<br />
+        <br />Let me be clear. I have almost an equal complexity in the features I am trying to capture than in the amount of information stored in the dataset itself. For the sake of my work, I am going to keep that part private. (I like my job).
     <h2>Stochastic Gradient Descent</h2>
-    <h2>Mini-Batch GD w/ Randomized Mini-Batch</h2>
+        >Stochastic Gradient Descent is more of a real-time gradient descent method. It does not require the summation of the gradient term over all of the points in the list to move one step. It allows for a more real-time update in that you will update the gradient with each point. This may not be preferential in all cases but it does work with very large datasets or in the case where you might be limited in the number of bits of the system. (16-bit vs 32-bit or 64-bit)
     <h2>SGD with Momentum</h2>
     <h2>Nesterov Momentum SGD</h2>
     <h2>Averaged SGD</h2>
