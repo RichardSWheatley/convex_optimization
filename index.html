@@ -14,6 +14,11 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+      <style type="text/css">
+          .auto-style1 {
+              text-align: justify;
+          }
+      </style>
   </head>
   <body>
     <section class="page-header">
@@ -25,31 +30,38 @@
     <section class="main-content">
     <h2> <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to <a href="https://github.com/wher0001" class="user-mention">@wher0001</a>'s site on Gradient Descent algorithms.</h2>
     <br />
-    <p>In this instance we will be considering only the supervised learning aspect. My job provides me with hundreds of datasets to work with. Almost all of these training sets should yield good results. The questions is always whether we need to modify our learning rates or decay rates for a specific training set. I will show here that the current methods, including the latest algorithms based strictly upon mathematical principles, do not fulfill our needs and therefore there remains a problem that needs to be addressed.</p>
+    <p class="auto-style1">In this instance we will be considering only the supervised learning aspect. My job provides me with hundreds of datasets to work with. Almost all of these training sets should yield good results. The questions is always whether we need to modify our learning rates or decay rates for a specific training set. I will show here that the current methods, including the latest algorithms based strictly upon mathematical principles, do not fulfill our needs and therefore there remains a problem that needs to be addressed.</p>
 
-    <p>Gradient Descent is a first-order approximation algorithm. It is a minimization algorithm that best operates on a convex or pseudo-convex Cost Function. This cost function is typically predefined although <b>@wher0001</b> has found that creating a convex Cost Function can improve the results if the intended output is well-known.</p>
+    <p>Gradient Descent is a first-order approximation algorithm. It is a minimization algorithm that best operates on a convex or pseudo-convex Cost Function. This cost function is typically predefined although <b>(<a href="https://github.com/wher0001" class="user-mention">@wher0001</a>)</b> has found that creating a convex Cost Function more specific to the tailored data can improve the results if the intended shape of the output is well-known.</p>
     <h2>Batch Gradient Descent</h2>
-    In general we have some set of equations that we are trying to solve. The Standard way to solve for this is by using Iterative Least-Squares Cost function technique. This technique involves having a Cost function $J(\mathbf{\theta})$ that makes the problem convex. It is generally practiced that the $$J(\mathbf{\theta}) = \frac{1}{2}\sum_{i=1}^n (h_\theta( \mathbf{x^{(i)}} ) - y^{(i)})^2$$ where $$h_\theta(\mathbf{x^{(i)}}) = \theta^\intercal x$$
-    <h2>Mini-Batch Gradient Descent w/ Randomized Mini-Batch</h2>
-    During my testing I found that running gradient descent was causing some issues with having to sum the gradient term over the entire dataset. One way to circumvent this is to run the gradient descent on a smaller subset of the data. To remove bias I randomized the the number in the subset and also randomized the data itself.<br />
-        <br />I picked a minimum and maximum mini-batch size for the randomization and then ran through a couple of datasets. Through trial and error I was able to find that this method worked the best for my data even beating out Nesterov's method. This will not work for large datasets but in my case, lrage datasets are in the 50-100 range.<br />
+    In general we have some set of equations that we are trying to solve. The Standard way to solve for this is by using Iterative Least-Squares Cost function technique. This technique involves having a Cost function $J(\mathbf{\theta})$ that makes the problem convex. It is generally practiced (for the datasets I am using) that the $$J(\mathbf{\theta}) = \frac{1}{2}\sum_{i=1}^n (h_\theta( \mathbf{x^{(i)}} ) - y^{(i)})^2$$ where $$h_\theta(\mathbf{x^{(i)}}) = \theta^\intercal x$$
+    <h2>Mini-Batch Gradient Descent w/ Randomized Size Constraint</h2>
+    During my testing I found that running gradient descent was causing some issues with having to sum the gradient term over the entire dataset. One way to circumvent this is to run the gradient descent on a smaller subset of the data. To remove bias, I randomized the number in the subset and also randomized the data itself.<br />
+        <br />I picked a minimum and maximum mini-batch size for the randomization and then ran through a couple of datasets. Through trial and error I was able to find that this method worked the best for my data even beating out Nesterov's method. This will not work for large datasets but in my case, large datasets are in the 50-100 range. This method also means that I need to store the full dataset as opposed to Stochastic Gradient Descent where you are truly just taking a new sample and tossing it after you get the data. The reason for this method is that we need the points kept to be able to test the accuracy of the convergence once the algortihm has been stopped. <br />
+        <br />
+        Essentially I am trading data in and out of the training set to improve accuracy but still trying to preserve a short convergence time. This algorithm will not benefit from online learning since the amount of data is small and can easily be stored in RAM (<em>6 -&gt; 64-bit doubles per point</em>).<br />
         <br />Let me be clear. I have almost an equal complexity in the features I am trying to capture than in the amount of information stored in the dataset itself. For the sake of my work, I am going to keep that part private. (I like my job).
     <h2>Stochastic Gradient Descent</h2>
-        >Stochastic Gradient Descent is more of a real-time gradient descent method. It does not require the summation of the gradient term over all of the points in the list to move one step. It allows for a more real-time update in that you will update the gradient with each point. This may not be preferential in all cases but it does work with very large datasets or in the case where you might be limited in the number of bits of the system. (16-bit vs 32-bit or 64-bit)
+        Stochastic Gradient Descent is more of a real-time (online) gradient descent method. It does not require the summation of the gradient term over all of the points in the list to move one step. It allows for a more real-time update in that you will update the gradient with each point.<br />
+        <br />
+        $$\theta_{t+1} = \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t}$$<br />
+        <br />
+        This may not be preferential in all cases but it does work with very large datasets or in the case where you might be limited in the number of bits of the system. (16-bit vs 32-bit or 64-bit)
     <h2>SGD with Momentum</h2>
+        <p>Stochastic Gradient Descent is a good method in and of itself but there are cases where it takes a while to converge. Stochastic gradient descent with momentum remembers the update at each iteration, and determines the next update as a convex combination of the gradient and the previous update.</p>
     <h2>Nesterov Momentum SGD</h2>
     <h2>Averaged SGD</h2>
     <h2>AdaGrad</h2>
     <h2>RMSProp</h2>
-    <p>RMSprop is an unpublished, adaptive learning rate method proposed by Geoff Hinton in <a href="http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf">Lecture 6e of his Coursera Class</a>.</p>
+    <p>RMSprop is an adaptive learning rate method proposed by Geoff Hinton. I specifically like this alternative although I would only use it if I had more time or specifically more CPU power than a standard ARM microcontroller.</p>
 
-	<p>RMSprop and Adadelta have both been developed independently around the same time stemming from the need to resolve Adagrad's radically diminishing learning rates. RMSprop in fact is identical to the first update vector of Adadelta that we derived above:</p>
+	<p>RMSprop is defined mathematically below:</p>
 	
 	<p>$$E[g^2]_t = \gamma * E[g^2]_{t-1} + (1 - \gamma) * g^2_t $$.</p>
 	
 	<p>$$\theta_{t+1} = \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t}$$</p>
 	
-	<p>RMSprop as well divides the learning rate by an exponentially decaying average of squared gradients. Hinton suggests $\gamma$ to be set to 0.9, the learning rate $\eta$ set to 0.001 and \epsilon set to 1e-8.</p>
+	<p>RMSprop divides the learning rate by an exponentially-decaying average of squared gradients. Hinton suggests $\gamma$ to be set to 0.9, the learning rate $\eta$ set to 0.001 and \epsilon set to 1e-8.</p>
 	
     <h2>Adam</h2>
     <p>'Adam' (for Adaptive Moment Estimation) is an update to ''RMSProp'' optimizer. In this running average of both the gradients and their magnitudes are used. The three equations that define this optimizer is as follows,
@@ -65,16 +77,8 @@
     $$w:=w-\frac{\eta}{\sqrt{\hat{v}(w,t)} + \epsilon} * \hat{m}(w,t)$$
     
     where, $\beta_1 , \beta_2$ are two forgetting factors of the algorithm, respectively for gradients and magnitude of gradients.</p>
-    
-    <h3>
-    <a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Designer Templates</h3>
-    
-    <p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
-    
-    <h3>
-    <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating pages manually</h3>
-    
-    <p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+        <p>&nbsp;</p>
+        <p>I truly did not see any improvement using Adam on my datasets although I need to reiterate that my datasets are relatively small and my Convex Cost function is definitely non-standard. I have not seen Adam typically run on Cost functions other than the standard one shown in the opening statements above. Perhaps an article for another day.</p>
     
     <h3>
     <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>

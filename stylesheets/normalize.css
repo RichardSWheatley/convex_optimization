@@ -44,6 +44,7 @@ nav,
 section,
 summary {
   display: block;
+    text-align: justify;
 }
 
 /**
