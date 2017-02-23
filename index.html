@@ -44,12 +44,16 @@
     <h2>Stochastic Gradient Descent</h2>
         Stochastic Gradient Descent is more of a real-time (online) gradient descent method. It does not require the summation of the gradient term over all of the points in the list to move one step. It allows for a more real-time update in that you will update the gradient with each point.<br />
         <br />
-        $$\theta_{t+1} = \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t}$$<br />
+        $$\theta_{t+1} = \theta_{t} - \alpha \nabla_\theta E[J(\theta)]$$<br />
         <br />
         This may not be preferential in all cases but it does work with very large datasets or in the case where you might be limited in the number of bits of the system. (16-bit vs 32-bit or 64-bit)
     <h2>SGD with Momentum</h2>
-        <p>Stochastic Gradient Descent is a good method in and of itself but there are cases where it takes a while to converge. Stochastic gradient descent with momentum remembers the update at each iteration, and determines the next update as a convex combination of the gradient and the previous update.</p>
+        <p>Stochastic Gradient Descent is a good method in and of itself but there are cases where it takes a while to converge. Stochastic gradient descent with momentum remembers the update at each iteration and determines the next update as a convex combination of the gradient and the previous update.</p>
+        <p>An example of when this method is needed is if the convex function in a particular example has a long, shallow ravine with steep walls leading tot he optimum. SGD without momentum will tend to &quot;bounce&quot; back and forth downt he steep sides rather than converge on the optimum.</p>
+        <p><span>Stochastic gradient descent with momentum remembers the update&nbsp;Δ&nbsp;w&nbsp;at each iteration, and determines the next update as a convex combination&nbsp;of the gradient and the previous update:<br />
+            $$\begin{align} v &amp;= \gamma v+ \alpha \nabla_{\theta} J(\theta) \\ \theta &amp;= \theta - v \end{align}$$</span></p>
     <h2>Nesterov Momentum SGD</h2>
+        <p><span>$$\begin{align} v_{t} &amp;= \gamma v_{t-1}+ \eta \nabla_\theta J(\theta - \gamma v_{t-1}) \\ \theta &amp;= \theta - v_{t} \end{align}$$</span></p>
     <h2>Averaged SGD</h2>
     <h2>AdaGrad</h2>
     <h2>RMSProp</h2>
@@ -66,7 +70,7 @@
             This algorithm did seem to make a few improvements but I had to modify the data as follows:</p>
         <ul>
             <li>normalize the input data to +/-1.0<ul>
-                <li>or in my case divide the data by 1000 which normalizes between +/- 3.0</li>
+                <li>&nbsp;in my case, I divided the data by 1000 which normalizes between +/- 3.0</li>
                 </ul>
             </li>
             <li>renormalize &quot;some&quot; of the outputs<ul>
