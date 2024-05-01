@@ -30,14 +30,14 @@
     <section class="main-content">
     <h2> <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to <a href="https://github.com/wher0001" class="user-mention">@wher0001</a>'s site on Gradient Descent algorithms.</h2>
     <br />
-    <p class="auto-style1">In this instance we will be considering only the supervised learning aspect. My job provides me with hundreds of datasets to work with. Almost all of these training sets should yield good results. The questions is always whether we need to modify our learning rates or decay rates for a specific training set. I will show here that the current methods, including the latest algorithms based strictly upon mathematical principles, do not fulfill our needs and therefore there remains a problem that needs to be addressed.</p>
+    <p class="auto-style1">In this instance, we will be considering only the supervised learning aspect. My job provides me with hundreds of datasets to work with. Almost all these training sets will yield good results. The question is always whether we need to modify our learning rates or decay rates for a specific training set. I will show here that the current methods, including the latest algorithms based strictly upon mathematical principles, do not fulfill our needs and therefore there remains a problem that needs to be addressed.</p>
 
     <p>Gradient Descent is a first-order approximation algorithm. It is a minimization algorithm that best operates on a convex or pseudo-convex Cost Function. This cost function is typically predefined although <b>(<a href="https://github.com/wher0001" class="user-mention">@wher0001</a>)</b> has found that creating a convex Cost Function more specific to the tailored data can improve the results if the intended shape of the output is well-known.</p>
     <h2>Batch Gradient Descent</h2>
-    In general we have some set of equations that we are trying to solve. The Standard way to solve for this is by using Iterative Least-Squares Cost function technique. This technique involves having a Cost function $J(\mathbf{\theta})$ that makes the problem convex. It is generally practiced (for the datasets I am using) that the $$J(\mathbf{\theta}) = \frac{1}{2}\sum_{i=1}^n (h_\theta( \mathbf{x^{(i)}} ) - y^{(i)})^2$$ where $$h_\theta(\mathbf{x^{(i)}}) = \theta^\intercal x$$
+    In general, we have some set of equations that we are trying to solve. The Standard way to solve for this is by using Iterative Least-Squares Cost function technique. This technique involves having a Cost function $J(\mathbf{\theta})$ that makes the problem convex. It is generally practiced (for the datasets I am using) that $$J(\mathbf{\theta}) = \frac{1}{2}\sum_{i=1}^n (h_\theta( \mathbf{x^{(i)}} ) - y^{(i)})^2$$ where $$h_\theta(\mathbf{x^{(i)}}) = \theta^\intercal x$$
     <h2>Mini-Batch Gradient Descent w/ Randomized Size Constraint</h2>
-    During my testing I found that running gradient descent was causing some issues with having to sum the gradient term over the entire dataset. One way to circumvent this is to run the gradient descent on a smaller subset of the data. To remove bias, I randomized the number in the subset and also randomized the data itself.<br />
-        <br />I picked a minimum and maximum mini-batch size for the randomization and then ran through a couple of datasets. Through trial and error I was able to find that this method worked the best for my data even beating out Nesterov's method. This will not work for large datasets but in my case, large datasets are in the 50-100 range. This method also means that I need to store the full dataset as opposed to Stochastic Gradient Descent where you are truly just taking a new sample and tossing it after you get the data. The reason for this method is that we need the points kept to be able to test the accuracy of the convergence once the algortihm has been stopped. <br />
+    During my testing, I found that running gradient descent was causing some issues with having to sum the gradient term over the entire dataset. One way to circumvent this is to run the gradient descent on a smaller subset of the data. To remove bias, I randomized the number in the subset and also randomized the data itself.<br />
+        <br />I picked a minimum and maximum mini-batch size for the randomization and then ran through a couple of datasets. Through trial and error, I was able to find that this method worked the best for my data even beating out Nesterov's method. This will not work for large datasets but in my case, large datasets are in the 50-100 range. This method also means that I need to store the full dataset as opposed to Stochastic Gradient Descent where you are truly just taking a new sample and tossing it after you get the data. The reason for this method is that we need the points kept to be able to test the accuracy of the convergence once the algortihm has been stopped. <br />
         <br />
         Essentially I am trading data in and out of the training set to improve accuracy but still trying to preserve a short convergence time. This algorithm will not benefit from online learning since the amount of data is small and can easily be stored in RAM (<em>6 -&gt; 64-bit doubles per point</em>).<br />
         <br />Let me be clear. I have almost an equal complexity in the features I am trying to capture than in the amount of information stored in the dataset itself. For the sake of my work, I am going to keep that part private. (I like my job).
@@ -46,7 +46,7 @@
         <br />
         $$\theta_{t+1} = \theta_{t} - \alpha \nabla_\theta E[J(\theta)]$$<br />
         <br />
-        This may not be preferential in all cases but it does work with very large datasets or in the case where you might be limited in the number of bits of the system. (16-bit vs 32-bit or 64-bit)
+        This may not be preferential in all cases, but it does work with very large datasets or in the case where you might be limited in the number of bits of the system. (16-bit vs 32-bit or 64-bit)
     <h2>SGD with Momentum</h2>
         <p>Stochastic Gradient Descent is a good method in and of itself but there are cases where it takes a while to converge. Stochastic gradient descent with momentum remembers the update at each iteration and determines the next update as a convex combination of the gradient and the previous update.</p>
         <p>An example of when this method is needed is if the convex function in a particular example has a long, shallow ravine with steep walls leading tot he optimum. SGD without momentum will tend to &quot;bounce&quot; back and forth downt he steep sides rather than converge on the optimum.</p>
@@ -55,7 +55,9 @@
     <h2>Nesterov Momentum SGD</h2>
         <p><span>$$\begin{align} v_{t} &amp;= \gamma v_{t-1}+ \eta \nabla_\theta J(\theta - \gamma v_{t-1}) \\ \theta &amp;= \theta - v_{t} \end{align}$$</span></p>
     <h2>Averaged SGD</h2>
+        <p><span>TODO at a later date</span></p>
     <h2>AdaGrad</h2>
+        <p><span>TODO at a later date</span></p>
     <h2>RMSProp</h2>
     <p>RMSprop is an adaptive learning rate method proposed by Geoff Hinton. I specifically like this alternative although I would only use it if I had more time or specifically more CPU power than a standard ARM microcontroller.</p>
 
@@ -65,9 +67,9 @@
 	
 	<p>$$\theta_{t+1} = \theta_{t} - \dfrac{\eta}{\sqrt{E[g^2]_t + \epsilon}} g_{t}$$</p>
 	
-	<p>RMSprop divides the learning rate by an exponentially-decaying average of squared gradients. Hinton suggests $\gamma$ to be set to 0.9, the learning rate $\eta$ set to 0.001 and \epsilon set to 1e-8.</p>
+	<p>RMSprop divides the learning rate by an exponentially decaying average of squared gradients. Hinton suggests $\gamma$ to be set to 0.9, the learning rate $\eta$ set to 0.001 and \epsilon set to 1e-8.</p>
         <p>
-            This algorithm did seem to make a few improvements but I had to modify the data as follows:</p>
+            This algorithm did seem to make a few improvements, but I had to modify the data as follows:</p>
         <ul>
             <li>normalize the input data to +/-1.0<ul>
                 <li>&nbsp;in my case, I divided the data by 1000 which normalizes between +/- 3.0</li>
@@ -95,7 +97,7 @@
     
     where, $\beta_1 , \beta_2$ are two forgetting factors of the algorithm, respectively for gradients and magnitude of gradients.</p>
         <p>&nbsp;</p>
-        <p>I truly did not see any improvement using Adam on my datasets although I need to reiterate that my datasets are relatively small and my Convex Cost function is definitely non-standard. I have not seen Adam typically run on Cost functions other than the standard one shown in the opening statements above. Perhaps an article for another day.</p>
+        <p>I truly did not see any improvement using Adam on my datasets although I need to reiterate that my datasets are relatively small, and my Convex Cost function is non-standard. I have not seen Adam typically run on Cost functions other than the standard one shown in the opening statements above. Perhaps an article for another day.</p>
     
     <h3>
     <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
@@ -118,3 +120,4 @@
   
   </body>
 </html>
+
