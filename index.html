@@ -40,6 +40,14 @@
             margin-top: 0.75rem;
             text-align: justify;
         }
+        /* Wide display equations scroll within themselves on narrow screens
+           instead of stretching the page sideways */
+        mjx-container[jax="CHTML"][display="true"] {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
     </style>
   </head>
   <body>
